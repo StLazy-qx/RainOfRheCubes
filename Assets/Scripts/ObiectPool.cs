@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -10,7 +9,7 @@ public class ObiectPool : MonoBehaviour
 
     private List<Cube> _pool = new List<Cube>();
 
-    protected void Initialize(Cube prefab)
+    public void Initialize(Cube prefab)
     {
         for (int i = 0; i < _capacity; i++)
         {
@@ -20,10 +19,17 @@ public class ObiectPool : MonoBehaviour
         }
     }
 
-    protected bool TryGetCube(out Cube cube)
+    public Cube GetCube(Cube prefab)
     {
-        cube = _pool.FirstOrDefault(number => number.IsActive == false);
+        Cube cube = _pool.FirstOrDefault(number => number.IsActive == false);
 
-        return cube != null;
+        if (cube == null)
+        {
+            cube = Instantiate(prefab, _container);
+            cube.SetActive(false);
+            _pool.Add(cube);
+        }
+
+        return cube;
     }
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Spawner : ObiectPool
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _prefab;
     [SerializeField] private Transform _spawnPlatform;
-    [SerializeField] private int _spawnCount = 10;
+    [SerializeField] private ObiectPool _pool;
     [SerializeField] private int _secondBetweenSpawn = 2;
 
     private float _minCoordinateSpawnX;
@@ -20,28 +20,26 @@ public class Spawner : ObiectPool
         _minCoordinateSpawnZ = _spawnPlatform.position.x - _spawnPlatform.localScale.x / 2;
         _maxCoordinateSpawnZ = _spawnPlatform.position.x + _spawnPlatform.localScale.x / 2;
 
-        Initialize(_prefab);
+        _pool.Initialize(_prefab);
     }
 
     private void Update()
     {
         _elapsedTime += Time.deltaTime;
 
-        if (_elapsedTime >= _secondBetweenSpawn)
+        if (_elapsedTime > _secondBetweenSpawn)
         {
-            if (TryGetCube(out Cube cube))
-            {
-                _elapsedTime = 0;
-                float randomPositionX = Random.Range(_minCoordinateSpawnX, _maxCoordinateSpawnX);
-                float randomPositionZ = Random.Range(_minCoordinateSpawnZ, _maxCoordinateSpawnZ);
-                Vector3 randomPosition = new Vector3(randomPositionX, _spawnPlatform.position.y, randomPositionZ);
+            _elapsedTime = 0;
+            float randomPositionX = Random.Range(_minCoordinateSpawnX, _maxCoordinateSpawnX);
+            float randomPositionZ = Random.Range(_minCoordinateSpawnZ, _maxCoordinateSpawnZ);
+            Vector3 randomPosition = new Vector3(randomPositionX, _spawnPlatform.position.y, randomPositionZ);
+            Cube cube = _pool.GetCube(_prefab);
 
-                SetCube(cube, randomPosition);
-            }
+            ActivateAndPositionCube(cube, randomPosition);
         }
     }
 
-    private void SetCube(Cube cube, Vector3 spawnPoint)
+    private void ActivateAndPositionCube(Cube cube, Vector3 spawnPoint)
     {
         cube.SetActive(true);
         cube.transform.position = spawnPoint;

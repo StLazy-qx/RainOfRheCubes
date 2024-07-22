@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMover : MonoBehaviour
@@ -11,14 +9,16 @@ public class CameraMover : MonoBehaviour
 
     private float _currentX = 0.0f;
     private float _currentY = 0.0f;
+    private readonly string _mouseMoveX = "Mouse X";
+    private readonly string _mouseMoveY = "Mouse Y";
 
     private void FixedUpdate()
     {
         if (_target == null)
             return;
 
-        _currentX += Input.GetAxis("Mouse X") * _sensitivity * Time.deltaTime;
-        _currentY -= Input.GetAxis("Mouse Y") * _sensitivity * Time.deltaTime;
+        _currentX += Input.GetAxis(_mouseMoveX) * _sensitivity * Time.deltaTime;
+        _currentY -= Input.GetAxis(_mouseMoveY) * _sensitivity * Time.deltaTime;
 
         Quaternion rotation = Quaternion.Euler(_currentY, _currentX, 0);
         Vector3 desiredPosition = _target.position + rotation * _offset;
