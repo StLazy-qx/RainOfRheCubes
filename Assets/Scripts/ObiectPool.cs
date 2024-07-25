@@ -9,27 +9,31 @@ public class ObiectPool : MonoBehaviour
 
     private List<Cube> _pool = new List<Cube>();
 
-    public void Initialize(Cube prefab)
+    public void Initialize(Cube template)
     {
         for (int i = 0; i < _capacity; i++)
         {
-            Cube newCube = Instantiate(prefab, _container);
-            newCube.SetActive(false);
-            _pool.Add(newCube);
+            AddCubeToPool(template);
         }
     }
 
-    public Cube GetCube(Cube prefab)
+    public Cube GetCube(Cube template)
     {
         Cube cube = _pool.FirstOrDefault(number => number.IsActive == false);
 
         if (cube == null)
         {
-            cube = Instantiate(prefab, _container);
-            cube.SetActive(false);
-            _pool.Add(cube);
+            cube = AddCubeToPool(template);
         }
 
         return cube;
+    }
+
+    private Cube AddCubeToPool(Cube template)
+    {
+        Cube newCube = Instantiate(template, _container);
+        newCube.SetActive(false);
+        _pool.Add(newCube);
+        return newCube;
     }
 }

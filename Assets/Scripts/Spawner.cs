@@ -35,11 +35,11 @@ public class Spawner : MonoBehaviour
             Vector3 randomPosition = new Vector3(randomPositionX, _spawnPlatform.position.y, randomPositionZ);
             Cube cube = _pool.GetCube(_prefab);
 
-            ActivateAndPositionCube(cube, randomPosition);
+            ActivateCube(cube, randomPosition);
         }
     }
 
-    private void ActivateAndPositionCube(Cube cube, Vector3 spawnPoint)
+    private void ActivateCube(Cube cube, Vector3 spawnPoint)
     {
         cube.SetActive(true);
         cube.transform.position = spawnPoint;

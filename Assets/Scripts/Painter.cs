@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
+
 public class Painter : MonoBehaviour
 {
     [SerializeField] private Material[] _materials;
