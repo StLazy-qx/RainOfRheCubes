@@ -1,23 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Painter))]
 
-public class Cube : MonoBehaviour
+public class Cube : SpawnableObject
 {
     private Painter _painter;
     private bool _isDestroyTimerStarted = false;
-    private bool _isActive;
 
-    public bool IsActive => _isActive;
-
-    private void Start()
-    {
-        _painter = GetComponent<Painter>();
-
-        _painter.SetBeginColor();
-    }
+    public event UnityAction<Vector3> CubeDestroyed;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -33,11 +26,11 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void SetActive(bool isActive)
+    public override void Initialize()
     {
-        _isActive = isActive;
+        _painter = GetComponent<Painter>();
 
-        gameObject.SetActive(isActive);
+        _painter.SetBeginColor();
     }
 
     private IEnumerator DestroyAfterRandomTime()
@@ -45,9 +38,9 @@ public class Cube : MonoBehaviour
         float randomLifeTime = Random.Range(2f, 5f);
 
         yield return new WaitForSeconds(randomLifeTime);
-
         SetActive(false);
         _painter.SetBeginColor();
+        CubeDestroyed?.Invoke(transform.position);
 
         _isDestroyTimerStarted = false;
     }
