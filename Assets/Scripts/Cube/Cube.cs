@@ -5,7 +5,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Painter))]
 
-public class Cube : SpawnableObject
+public class Cube : Item
 {
     private Painter _painter;
     private bool _isDestroyTimerStarted = false;
@@ -14,9 +14,9 @@ public class Cube : SpawnableObject
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out Platform platform))
+        if (_isDestroyTimerStarted == false)
         {
-            if (_isDestroyTimerStarted == false)
+            if (collision.gameObject.TryGetComponent(out Platform platform))
             {
                 _isDestroyTimerStarted = true;
 

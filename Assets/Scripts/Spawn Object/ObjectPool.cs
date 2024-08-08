@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ObjectPool<T> where T : SpawnableObject
+public class ObjectPool<T> where T : Item
 {
     private T _template;
     private List<T> _pool;

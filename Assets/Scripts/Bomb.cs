@@ -3,11 +3,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class Bomb : SpawnableObject
+public class Bomb : Item
 {
     [SerializeField] private Material _material;
-    [SerializeField] private int _explosionRadius = 12;
-    [SerializeField] private int _explosionForce = 800;
+    [SerializeField] private int _explosionRadius;
+    [SerializeField] private int _explosionForce;
 
     private float _fadeDuration;
 

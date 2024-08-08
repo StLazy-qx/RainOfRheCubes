@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class SpawnableObject : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
     private bool _isActive;
 
