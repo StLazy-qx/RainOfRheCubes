@@ -9,8 +9,8 @@ public abstract class UICounterItems<T, N> : MonoBehaviour where T : Spawner<N> 
 
     protected void ShowInfo()
     {
-        ShowCurrentCountItem(_textCurrentCount, _spawner.CurrentCount, _spawner.Size);
-        ShowTotalCount(_textTotalCount, _spawner.TotalCreatedObjects);
+        ShowCurrentCountItem(_textCurrentCount, _spawner.CurrentCount, _spawner.TotalCreatedObjects);
+        ShowTotalCount(_textTotalCount, _spawner.TotalSpawnedObjects);
     }
 
     private void ShowCurrentCountItem(TextMeshProUGUI textComponent, int currentValue, int capacity)

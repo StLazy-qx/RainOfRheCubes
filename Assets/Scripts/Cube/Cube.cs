@@ -10,7 +10,7 @@ public class Cube : Item
     private Painter _painter;
     private bool _isDestroyTimerStarted = false;
 
-    public event UnityAction<Vector3> CubeDestroyed;
+    public event UnityAction<Vector3> Destroyed;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -40,7 +40,7 @@ public class Cube : Item
         yield return new WaitForSeconds(randomLifeTime);
         SetActive(false);
         _painter.SetBeginColor();
-        CubeDestroyed?.Invoke(transform.position);
+        Destroyed?.Invoke(transform.position);
 
         _isDestroyTimerStarted = false;
     }

@@ -14,6 +14,6 @@ public class BombsSpawner : Spawner<Bomb>
         ActivateObject(bomb, position);
 
         CurrentScore = Pool.GetActiveObjectsCount();
-        TotalCreated++;
+        TotalSpawned++;
     }
 }

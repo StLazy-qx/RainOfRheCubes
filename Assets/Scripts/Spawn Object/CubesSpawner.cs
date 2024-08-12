@@ -33,8 +33,8 @@ public class CubesSpawner : Spawner<Cube>
     {
         Cube cube = Pool.GetObject();
 
-        cube.CubeDestroyed -= _bombsSpawner.OnCubeDestroyed;
-        cube.CubeDestroyed += _bombsSpawner.OnCubeDestroyed;
+        cube.Destroyed -= _bombsSpawner.OnCubeDestroyed;
+        cube.Destroyed += _bombsSpawner.OnCubeDestroyed;
 
         float randomPositionX = Random.Range(_minCoordinateSpawnX, _maxCoordinateSpawnX);
         float randomPositionZ = Random.Range(_minCoordinateSpawnZ, _maxCoordinateSpawnZ);
@@ -43,7 +43,7 @@ public class CubesSpawner : Spawner<Cube>
         ActivateObject(cube, randomPosition);
         CurrentScore = Pool.GetActiveObjectsCount();
 
-        TotalCreated++;
+        TotalSpawned++;
     }
 
     private void SetSpawnCoordinate()

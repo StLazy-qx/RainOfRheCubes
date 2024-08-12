@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class ObjectPool<T> where T : Item
 {
@@ -8,51 +8,34 @@ public class ObjectPool<T> where T : Item
     private List<T> _pool;
     private Transform _container;
 
-    public int Capacity { get; private set; }
+    public int TotalCreated { get; private set; }
 
-    public void Initialize(T template, int capacity, Transform container)
+    public void Initialize(T template, int initialCapacity, Transform container)
     {
         _template = template;
         _container = container;
-        _pool = new List<T>(capacity);
-        Capacity = capacity;
-
-        for (int i = 0; i < capacity; i++)
-        {
-            T newObject = Object.Instantiate(_template, _container);
-
-            newObject.SetActive(false);
-            _pool.Add(newObject);
-        }
+        _pool = new List<T>(initialCapacity);
     }
 
     public T GetObject()
     {
-        T objectT = _pool.FirstOrDefault(îbj => îbj.IsActive == false);
+        T objectType = _pool.FirstOrDefault(îbj => îbj.IsActive == false);
 
-        if (objectT == null)
+        if (objectType == null)
         {
-            objectT = Object.Instantiate(_template, _container);
+            objectType = Object.Instantiate(_template, _container);
 
-            objectT.SetActive(false);
-            _pool.Add(objectT);
+            objectType.SetActive(false);
+            _pool.Add(objectType);
         }
 
-        return objectT;
+        TotalCreated = _pool.Count;
+
+        return objectType;
     }
 
     public int GetActiveObjectsCount()
     {
-        int count = 0;
-
-        foreach (T obj in _pool)
-        {
-            if (obj.gameObject.activeInHierarchy)
-            {
-                count++;
-            }
-        }
-
-        return count;
+        return _pool.Count(obj => obj.gameObject.activeInHierarchy);
     }
 }

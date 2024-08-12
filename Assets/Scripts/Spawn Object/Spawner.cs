@@ -4,15 +4,16 @@ public abstract class Spawner<T> : MonoBehaviour where T : Item
 {
     [SerializeField] protected T Prefab;
     [SerializeField] protected Transform Container;
-    [SerializeField] protected int Capacity = 10;
+    [SerializeField] protected int Capacity;
 
     protected ObjectPool<T> Pool;
-    protected int TotalCreated;
+    protected int TotalSpawned;
     protected int CurrentScore;
 
-    public int Size => Capacity;
     public int CurrentCount => CurrentScore;
-    public int TotalCreatedObjects => TotalCreated;
+    public int TotalSpawnedObjects => TotalSpawned;
+    public int TotalCreatedObjects => Pool.TotalCreated;
+
 
     private void Awake()
     {
